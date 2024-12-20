@@ -1,0 +1,227 @@
+{
+    "webflow_pricing_flow": {
+      "plans": {
+        "teams": {
+          "starter": {
+            "plan_name": "Starter",
+            "price_yearly": 0,
+            "price_monthly": 0,
+            "features": [
+              "Free for teams",
+              "2 staging sites",
+              "1 full seat",
+              "2 agency/freelancer guests"
+            ]
+          },
+          "core": {
+            "plan_name": "Core",
+            "price_yearly": 19,
+            "price_monthly": 28,
+            "features": [
+              "10 staging sites",
+              "1 full seat",
+              "Basic collaboration features"
+            ]
+          },
+          "growth": {
+            "plan_name": "Growth",
+            "price_yearly": 49,
+            "price_monthly": 60,
+            "features": [
+              "Unlimited staging sites",
+              "Advanced roles and permissions",
+              "Publishing permissions",
+              "Shared libraries"
+            ]
+          }
+        },
+        "freelancers_agencies": {
+          "starter": {
+            "plan_name": "Starter",
+            "price_yearly": 0,
+            "price_monthly": 0,
+            "features": [
+              "Free for freelancers and agencies",
+              "2 staging sites",
+              "1 full seat"
+            ]
+          },
+          "freelancer": {
+            "plan_name": "Freelancer",
+            "price_yearly": 16,
+            "price_monthly": 24,
+            "features": [
+              "10 staging sites",
+              "Full CMS access",
+              "Free guest access in client workspaces"
+            ]
+          },
+          "agency": {
+            "plan_name": "Agency",
+            "price_yearly": 35,
+            "price_monthly": 42,
+            "features": [
+              "Unlimited staging sites",
+              "Advanced roles and permissions",
+              "Shared libraries"
+            ]
+          }
+        }
+      },
+      "seat_pricing": {
+        "full": {
+          "seat_type": "Full",
+          "price_yearly": 39,
+          "price_monthly": 45,
+          "description": "Full access for Admins/Designers."
+        },
+        "limited": {
+          "seat_type": "Limited",
+          "price_yearly": 15,
+          "price_monthly": 19,
+          "description": "Limited access for Content Editors."
+        },
+        "free": {
+          "seat_type": "Free",
+          "price_yearly": 0,
+          "price_monthly": 0,
+          "description": "Free access for Reviewers."
+        }
+      },
+      "steps": {
+        "step_1": {
+          "step_name": "Identify User Type",
+          "question": "What best describes you?",
+          "options": {
+            "A": "Freelancer or agency",
+            "B": "Team or company"
+          },
+          "next_step": {
+            "A": "step_2A",
+            "B": "step_2B"
+          }
+        },
+        "step_2A": {
+          "step_name": "Define Needs for Freelancers/Agencies",
+          "question": "What are you primarily looking for in Webflow?",
+          "options": {
+            "A": "Manage a few client projects (up to 10).",
+            "B": "Manage many client projects with advanced collaboration features."
+          },
+          "next_step": {
+            "A": "freelancer_plan",
+            "B": "agency_plan"
+          }
+        },
+        "step_2B": {
+          "step_name": "Define Needs for Teams/Companies",
+          "question": "What do you primarily need Webflow for?",
+          "options": {
+            "A": "Build a website for my company.",
+            "B": "Collaborate with others in my team."
+          },
+          "next_step": {
+            "A": "starter_plan",
+            "B": "step_3"
+          }
+        },
+        "step_3": {
+          "step_name": "Team Roles and Seats",
+          "question": "How many people will work in your Webflow workspace, and what are their roles?",
+          "roles": {
+            "full": {
+              "role_name": "Full Access (Admins/Designers)",
+              "description": "Team members who need full access to design, develop, and manage projects.",
+              "price_key": "full"
+            },
+            "limited": {
+              "role_name": "Limited Access (Content Editors)",
+              "description": "Team members who only add/edit/delete content.",
+              "price_key": "limited"
+            },
+            "free": {
+              "role_name": "Free Access (Reviewers)",
+              "description": "Team members who only review and comment on designs.",
+              "price_key": "free"
+            }
+          },
+          "next_step": "step_4"
+        },
+        "step_4": {
+          "step_name": "Billing Preference",
+          "question": "How would you like to pay?",
+          "options": {
+            "A": "Yearly (Save up to 33%).",
+            "B": "Monthly."
+          },
+          "next_step": "output_recommendation"
+        }
+      },
+      "output_template": {
+        "plan": "Recommended Plan",
+        "base_cost": "Base cost of the selected plan",
+        "seat_costs": [
+          {
+            "role": "Full Seats",
+            "quantity": "Number of full seats",
+            "cost_per_seat": "Cost per seat",
+            "total_cost": "Total cost for full seats"
+          },
+          {
+            "role": "Limited Seats",
+            "quantity": "Number of limited seats",
+            "cost_per_seat": "Cost per seat",
+            "total_cost": "Total cost for limited seats"
+          },
+          {
+            "role": "Free Seats",
+            "quantity": "Number of free seats",
+            "cost_per_seat": "$0",
+            "total_cost": "$0"
+          }
+        ],
+        "total_cost": "Sum of base plan and all seat costs",
+        "billing_cycle": "Selected billing cycle (Yearly or Monthly)",
+        "reasoning": "Explanation of why this plan fits the user's needs"
+      },
+      "example_input_output": {
+        "example_input": {
+          "user_type": "Freelancer/Agency",
+          "needs": "Manage many client projects",
+          "roles": {
+            "full_seats": 3,
+            "limited_seats": 4,
+            "free_seats": 5
+          },
+          "billing_cycle": "Yearly"
+        },
+        "example_output": {
+          "plan": "Agency Plan",
+          "base_cost": "$35/month (billed yearly)",
+          "seat_costs": [
+            {
+              "role": "Full Seats",
+              "quantity": 3,
+              "cost_per_seat": "$39",
+              "total_cost": "$117"
+            },
+            {
+              "role": "Limited Seats",
+              "quantity": 4,
+              "cost_per_seat": "$15",
+              "total_cost": "$60"
+            },
+            {
+              "role": "Free Seats",
+              "quantity": 5,
+              "cost_per_seat": "$0",
+              "total_cost": "$0"
+            }
+          ],
+          "total_cost": "$212/month (billed yearly)",
+          "billing_cycle": "Yearly",
+          "reasoning": "The Agency Plan offers unlimited staging sites, shared libraries, and advanced roles, ideal for managing many client projects."
+        }
+      }
+    }
+  }

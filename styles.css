@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background: linear-gradient(to bottom right, #0f172a, #1e293b);
+    color: #e2e8f0;
+    min-height: 100vh;
+}
+
+.option-btn {
+    transition: all 0.3s ease;
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(10px);
+    min-height: 160px;
+}
+
+.option-btn.selected {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.option-btn svg {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 16px;
+}
+
+.option-btn-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.option-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(14, 165, 233, 0.15);
+}
+
+.option-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.step-container {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.3s ease-in-out;
+}
+
+.step-container.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.slider {
+    width: 100%;
+    height: 8px;
+    background-color: #d1d5db;
+    border-radius: 8px;
+    appearance: none;
+    cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background-color: #3498db;
+    border-radius: 50%;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+
+.slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background-color: #3498db;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.seat-slider {
+    background-color: #ffffff;
+    padding: 16px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid #d1d5db;
+}
+
+/* Tooltip Customization */
+.tippy-box {
+    background-color: #333333;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.tippy-arrow {
+    color: #333333;
+}
+
+/* Animation for step transitions */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Step visibility */
+.step {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.step[x-show] {
+    display: block;
+    opacity: 1;
+}
+
+/* Results visibility */
+#results {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#results[x-show] {
+    display: block;
+    opacity: 1;
+}
+
+/* Navigation buttons */
+.navigation button {
+    transition: all 0.2s ease-in-out;
+}
+
+.navigation button:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.navigation button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

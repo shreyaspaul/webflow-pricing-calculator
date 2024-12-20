@@ -1,0 +1,11 @@
+{
+  "name": "webflow-pricing-calculator",
+  "version": "1.0.0",
+  "description": "Webflow Pricing Calculator",
+  "scripts": {
+    "build:css": "tailwindcss -i ./styles.css -o ./dist/styles.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
+}
