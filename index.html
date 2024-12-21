@@ -4,345 +4,141 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webflow Pricing Calculator</title>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="calculator-alpine.js"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
-    <div class="max-w-2xl w-full mx-auto" x-data="calculator">
-        <!-- Step 1 -->
-        <div x-show="step === 1" class="space-y-8">
-            <h2 class="text-3xl font-bold text-center mb-8">What type of user are you?</h2>
-            <div class="grid gap-4">
-                <button 
-                    @click="selectUserType('freelancer')" 
-                    :class="{ 'bg-blue-600': userType === 'freelancer' }"
-                    class="p-6 text-xl text-left rounded-xl border border-gray-700 hover:bg-blue-600 transition-colors"
-                >
-                    Freelancer or agency
-                </button>
-                <button 
-                    @click="selectUserType('team')" 
-                    :class="{ 'bg-blue-600': userType === 'team' }"
-                    class="p-6 text-xl text-left rounded-xl border border-gray-700 hover:bg-blue-600 transition-colors"
-                >
-                    Team or company
-                </button>
-            </div>
-            <div class="mt-8 flex justify-end">
-                <button 
-                    @click="nextStep"
-                    :disabled="!userType"
-                    class="px-8 py-3 bg-blue-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    Next
-                </button>
-            </div>
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Webflow Workspace Plan Advisor</h1>
+            <p class="text-gray-400">We'll help you find the perfect plan based on your needs</p>
         </div>
 
-        <!-- Step 2 -->
-        <div x-show="step === 2" class="space-y-8">
-            <h2 class="text-3xl font-bold text-center">What are your needs?</h2>
-            
-            <!-- Freelancer options -->
-            <div x-show="userType === 'freelancer'" class="space-y-4">
-                <button 
-                    @click="selectNeed('build')"
-                    :class="{ 'bg-blue-600': needs === 'build' }"
-                    class="w-full p-6 text-left rounded-xl border border-gray-700 hover:bg-blue-600 transition-colors space-y-2"
-                >
-                    <div class="text-xl font-semibold">Manage a few client projects</div>
-                    <div class="text-gray-400">
-                        Perfect for freelancers managing up to 10 client projects. 
-                        Includes essential design tools and CMS features.
-                    </div>
-                </button>
-
-                <button 
-                    @click="selectNeed('agency')"
-                    :class="{ 'bg-blue-600': needs === 'agency' }"
-                    class="w-full p-6 text-left rounded-xl border border-gray-700 hover:bg-blue-600 transition-colors space-y-2"
-                >
-                    <div class="text-xl font-semibold">Manage many client projects</div>
-                    <div class="text-gray-400">
-                        Ideal for agencies handling multiple clients with advanced needs.
-                        Includes unlimited projects and advanced collaboration features.
-                    </div>
-                </button>
-            </div>
-
-            <!-- Team options -->
-            <div x-show="userType === 'team'" class="space-y-4">
-                <button 
-                    @click="selectNeed('company')"
-                    :class="{ 'bg-blue-600': needs === 'company' }"
-                    class="w-full p-6 text-left rounded-xl border border-gray-700 hover:bg-blue-600 transition-colors space-y-2"
-                >
-                    <div class="text-xl font-semibold">Single-Site Team Plan</div>
-                    <div class="text-gray-400">
-                        Perfect for small teams building and managing their company website. Includes 10 
-                        staging sites, essential design tools, and basic collaboration features.
-                    </div>
-                </button>
-
-                <button 
-                    @click="selectNeed('collaborate')"
-                    :class="{ 'bg-blue-600': needs === 'collaborate' }"
-                    class="w-full p-6 text-left rounded-xl border border-gray-700 hover:bg-blue-600 transition-colors space-y-2"
-                >
-                    <div class="text-xl font-semibold">Collaborate on multiple projects</div>
-                    <div class="text-gray-400">
-                        Ideal for teams working on multiple websites with different stakeholders. 
-                        Includes advanced collaboration tools, roles management, and shared design libraries.
-                    </div>
-                </button>
-            </div>
-
-            <div class="flex justify-between items-center mt-8">
-                <button 
-                    @click="prevStep"
-                    class="px-8 py-3 border border-gray-700 rounded-lg hover:bg-gray-800 transition-colors"
-                >
-                    Back
-                </button>
-                <button 
-                    @click="nextStep"
-                    x-show="needs"
-                    class="px-8 py-3 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                    Next
-                </button>
-            </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div x-show="step === 3" class="space-y-8">
-            <h2 class="text-3xl font-bold text-center mb-8">Configure your team</h2>
-            
-            <div class="space-y-6">
-                <!-- Full Access -->
-                <div class="p-6 rounded-xl border border-gray-700">
-                    <div class="flex justify-between items-center mb-2">
-                        <div>
-                            <div class="text-xl font-semibold">Full Access</div>
-                            <div class="text-gray-400 mb-2">Can edit and publish</div>
-                            <div class="text-sm text-gray-500">
-                                Perfect for team leaders and developers. Full access seats can create, edit, 
-                                and publish sites, manage team settings, and access all design features.
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            <button @click="updateSeats('full', false)" class="p-2 rounded-lg border border-gray-700 hover:bg-gray-800">-</button>
-                            <span x-text="seats.full" class="w-8 text-center"></span>
-                            <button @click="updateSeats('full', true)" class="p-2 rounded-lg border border-gray-700 hover:bg-gray-800">+</button>
-                        </div>
-                    </div>
+        <div class="space-y-8">
+            <!-- Step 1: User Type -->
+            <div id="step1" class="step">
+                <h2 class="text-2xl font-bold mb-6">What best describes you?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="option-btn" data-value="Freelancer or agency">
+                        <span class="text-lg font-semibold block mb-2">Freelancer or agency</span>
+                        <span class="text-sm text-gray-400">For individuals or agencies building sites for clients</span>
+                    </button>
+                    <button class="option-btn" data-value="Team or company">
+                        <span class="text-lg font-semibold block mb-2">Team or company</span>
+                        <span class="text-sm text-gray-400">For organizations building and managing sites together</span>
+                    </button>
                 </div>
+            </div>
 
-                <!-- Limited Access -->
-                <div class="p-6 rounded-xl border border-gray-700">
-                    <div class="flex justify-between items-center mb-2">
-                        <div>
-                            <div class="text-xl font-semibold">Limited Access</div>
-                            <div class="text-gray-400 mb-2">Can make limited edits and publish</div>
-                            <div class="text-sm text-gray-500">
-                                Build and edit pages using components and modify content. Perfect for team 
-                                members who need to make content updates and create new pages.
+            <!-- Step 2A: Freelancer/Agency Needs -->
+            <div id="step2A" class="step">
+                <h2 class="text-2xl font-bold mb-6">What are you primarily looking for in Webflow?</h2>
+                <div class="grid grid-cols-1 gap-4">
+                    <button class="option-btn" data-value="Manage a few client projects (up to 10).">
+                        <span class="text-lg font-semibold block mb-2">Manage a few client projects</span>
+                        <span class="text-sm text-gray-400">Up to 10 staging sites, perfect for smaller agencies</span>
+                    </button>
+                    <button class="option-btn" data-value="Manage many client projects with advanced collaboration features.">
+                        <span class="text-lg font-semibold block mb-2">Manage many client projects</span>
+                        <span class="text-sm text-gray-400">Unlimited staging sites with advanced collaboration</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2B: Team/Company Needs -->
+            <div id="step2B" class="step hidden">
+                <h2 class="text-2xl font-bold mb-6">What do you primarily need Webflow for?</h2>
+                <div class="grid grid-cols-1 gap-4">
+                    <button class="option-btn" data-value="Build a website for my company.">
+                        <span class="text-lg font-semibold block mb-2">Build a website for my company</span>
+                        <span class="text-sm text-gray-400">Perfect for small teams with basic needs</span>
+                    </button>
+                    <button class="option-btn" data-value="Collaborate with others in my team.">
+                        <span class="text-lg font-semibold block mb-2">Collaborate with others in my team</span>
+                        <span class="text-sm text-gray-400">For teams that need collaboration features</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Team Configuration -->
+            <div id="step3" class="step hidden">
+                <h2 class="text-2xl font-bold mb-6">How many people will work in your Webflow workspace, and what are their roles?</h2>
+                <div class="space-y-6">
+                    <!-- Full Access Seats -->
+                    <div class="bg-gray-800/50 rounded-xl p-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="text-lg font-semibold text-blue-400">Full Access (Admins/Designers)</h3>
+                                <p class="text-sm text-gray-400">Team members who need full access to design, develop, and manage projects</p>
                             </div>
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            <button @click="updateSeats('limited', false)" class="p-2 rounded-lg border border-gray-700 hover:bg-gray-800">-</button>
-                            <span x-text="seats.limited" class="w-8 text-center"></span>
-                            <button @click="updateSeats('limited', true)" class="p-2 rounded-lg border border-gray-700 hover:bg-gray-800">+</button>
+                            <div class="flex items-center space-x-3">
+                                <button class="seat-btn" id="decrementfull">-</button>
+                                <span class="w-8 text-center" id="fullCount">1</span>
+                                <button class="seat-btn" id="incrementfull">+</button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Free Access -->
-                <div class="p-6 rounded-xl border border-gray-700">
-                    <div class="flex justify-between items-center mb-2">
-                        <div>
-                            <div class="text-xl font-semibold">Free Access</div>
-                            <div class="text-gray-400 mb-2">Can only review and comment</div>
-                            <div class="text-sm text-gray-500">
-                                View projects and provide feedback through comments. Perfect for stakeholders 
-                                who need to review and approve work.
+                    <!-- Limited Access Seats -->
+                    <div class="bg-gray-800/50 rounded-xl p-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="text-lg font-semibold text-blue-400">Limited Access (Content Editors)</h3>
+                                <p class="text-sm text-gray-400">Team members who only add/edit/delete content</p>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <button class="seat-btn" id="decrementlimited">-</button>
+                                <span class="w-8 text-center" id="limitedCount">0</span>
+                                <button class="seat-btn" id="incrementlimited">+</button>
                             </div>
                         </div>
-                        <div class="flex items-center space-x-4">
-                            <button @click="updateSeats('free', false)" class="p-2 rounded-lg border border-gray-700 hover:bg-gray-800">-</button>
-                            <span x-text="seats.free" class="w-8 text-center"></span>
-                            <button @click="updateSeats('free', true)" class="p-2 rounded-lg border border-gray-700 hover:bg-gray-800">+</button>
+                    </div>
+
+                    <!-- Free Access Seats -->
+                    <div class="bg-gray-800/50 rounded-xl p-6">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3 class="text-lg font-semibold text-blue-400">Free Access (Reviewers)</h3>
+                                <p class="text-sm text-gray-400">Team members who only review and comment on designs</p>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <button class="seat-btn" id="decrementfree">-</button>
+                                <span class="w-8 text-center" id="freeCount">0</span>
+                                <button class="seat-btn" id="incrementfree">+</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-8 flex justify-between">
-                <button 
-                    @click="prevStep"
-                    class="px-8 py-3 border border-gray-700 rounded-lg hover:bg-gray-800"
-                >
-                    Back
-                </button>
-                <button 
-                    @click="nextStep"
-                    class="px-8 py-3 bg-blue-600 rounded-lg"
-                >
-                    Next
-                </button>
-            </div>
-        </div>
-
-        <!-- Step 4 -->
-        <div x-show="step === 4" class="space-y-8">
-            <h2 class="text-3xl font-bold text-center mb-8">Choose your billing cycle</h2>
-            
-            <div class="grid gap-4">
-                <button 
-                    @click="selectBilling('monthly')"
-                    :class="{ 'bg-blue-600': billing === 'monthly' }"
-                    class="p-6 text-xl text-left rounded-xl border border-gray-700 hover:bg-blue-600 transition-colors"
-                >
-                    Monthly billing
-                </button>
-                <button 
-                    @click="selectBilling('yearly')"
-                    :class="{ 'bg-blue-600': billing === 'yearly' }"
-                    class="p-6 text-xl text-left rounded-xl border border-gray-700 hover:bg-blue-600 transition-colors"
-                >
-                    Yearly billing
-                </button>
-            </div>
-
-            <div class="mt-8 flex justify-between">
-                <button 
-                    @click="prevStep"
-                    class="px-8 py-3 border border-gray-700 rounded-lg hover:bg-gray-800"
-                >
-                    Back
-                </button>
-                <button 
-                    @click="nextStep"
-                    :disabled="!billing"
-                    class="px-8 py-3 bg-blue-600 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                    See Results
-                </button>
-            </div>
-        </div>
-
-        <!-- Results -->
-        <div x-show="step === 5" class="space-y-8">
-            <template x-if="recommendedPlan">
-                <div class="space-y-8">
-                    <h2 class="text-3xl font-bold text-center mb-8">Recommended Plan</h2>
-                    
-                    <div class="p-8 rounded-xl border border-blue-500 bg-blue-500/10">
-                        <div class="text-center mb-8">
-                            <h3 class="text-2xl font-bold mb-2" x-text="recommendedPlan.name"></h3>
-                            <div class="text-4xl font-bold">
-                                $<span x-text="formatPrice(recommendedPlan.breakdown.total)"></span>
-                                <span class="text-lg font-normal text-gray-400">/month</span>
-                            </div>
-                            <div x-show="billing === 'yearly'" class="mt-2 text-green-400">
-                                Billed annually
-                            </div>
-                        </div>
-
-                        <!-- Pricing Breakdown -->
-                        <div class="mb-8 border-t border-b border-gray-700 py-6">
-                            <h4 class="font-semibold text-lg mb-4">Pricing Breakdown:</h4>
-                            <div class="space-y-3">
-                                <!-- Base Price -->
-                                <div class="flex justify-between items-center">
-                                    <span>Base Plan Price</span>
-                                    <span>$<span x-text="formatPrice(recommendedPlan.breakdown.base)"></span></span>
-                                </div>
-
-                                <!-- Full Access Seats -->
-                                <template x-if="seats.full > 0">
-                                    <div class="space-y-2">
-                                        <div class="flex justify-between items-center text-gray-400">
-                                            <span>Full Access Seats (1 included in plan)</span>
-                                            <span>1 × Included</span>
-                                        </div>
-                                        <template x-if="seats.full > 1">
-                                            <div class="flex justify-between items-center">
-                                                <span>
-                                                    Additional Full Access Seats 
-                                                    (<span x-text="seats.full - 1"></span> × $<span x-text="recommendedPlan.seatPrices.full"></span>)
-                                                </span>
-                                                <span>$<span x-text="formatPrice(recommendedPlan.breakdown.seatCosts.full)"></span></span>
-                                            </div>
-                                        </template>
-                                    </div>
-                                </template>
-
-                                <!-- Limited Access Seats -->
-                                <template x-if="seats.limited > 0">
-                                    <div class="flex justify-between items-center">
-                                        <span>
-                                            Limited Access Seats 
-                                            (<span x-text="seats.limited"></span> × $<span x-text="recommendedPlan.seatPrices.limited"></span>)
-                                        </span>
-                                        <span>$<span x-text="formatPrice(recommendedPlan.breakdown.seatCosts.limited)"></span></span>
-                                    </div>
-                                </template>
-
-                                <!-- Total -->
-                                <div class="flex justify-between items-center pt-3 border-t border-gray-700 text-lg font-bold">
-                                    <span>Total Monthly Price</span>
-                                    <span>$<span x-text="formatPrice(recommendedPlan.breakdown.total)"></span></span>
-                                </div>
-
-                                <!-- Yearly Total -->
-                                <template x-if="billing === 'yearly'">
-                                    <div class="flex justify-between items-center text-sm text-gray-400">
-                                        <span>Total Yearly Price</span>
-                                        <span>$<span x-text="formatPrice(recommendedPlan.breakdown.total * 12)"></span>/year</span>
-                                    </div>
-                                </template>
-                            </div>
-                        </div>
-                        
-                        <!-- Features -->
-                        <div class="space-y-4">
-                            <h4 class="font-semibold text-lg">Features:</h4>
-                            <ul class="space-y-3">
-                                <template x-for="feature in recommendedPlan.features" :key="feature">
-                                    <li class="flex items-center">
-                                        <svg class="w-5 h-5 mr-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                        </svg>
-                                        <span x-text="feature"></span>
-                                    </li>
-                                </template>
-                            </ul>
-                        </div>
-
-                        <div class="mt-8 flex justify-center">
-                            <a 
-                                href="https://webflow.com/pricing" 
-                                target="_blank"
-                                class="px-8 py-3 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
-                            >
-                                Get Started
-                            </a>
-                        </div>
-                    </div>
+            <!-- Step 4: Billing Cycle -->
+            <div id="step4" class="step hidden">
+                <h2 class="text-2xl font-bold mb-6">How would you like to pay?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button class="option-btn" data-value="Yearly">
+                        <span class="text-lg font-semibold block mb-2">Yearly</span>
+                        <span class="text-sm text-gray-400">Save up to 33% with annual billing</span>
+                    </button>
+                    <button class="option-btn" data-value="Monthly">
+                        <span class="text-lg font-semibold block mb-2">Monthly</span>
+                        <span class="text-sm text-gray-400">More flexibility with month-to-month payments</span>
+                    </button>
                 </div>
-            </template>
+            </div>
 
-            <div class="mt-8 flex justify-start">
-                <button 
-                    @click="prevStep"
-                    class="px-8 py-3 border border-gray-700 rounded-lg hover:bg-gray-800"
-                >
-                    Back
-                </button>
+            <!-- Results -->
+            <div id="results" class="step hidden">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+
+            <!-- Navigation -->
+            <div class="flex justify-between mt-8">
+                <button id="backBtn" class="px-6 py-2 rounded-lg bg-gray-700 text-white hover:bg-gray-600 hidden">Back</button>
+                <button id="nextBtn" class="px-6 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-500">Next</button>
             </div>
         </div>
     </div>
+
+    <script src="calculator.js"></script>
 </body>
 </html>
